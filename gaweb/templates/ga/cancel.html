@@ -1,0 +1,22 @@
+{% extends "ga/base.html" %}
+
+{% block content %}
+<div class="row">
+    <article id="main-content">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-12">
+            <section class="article-header">
+                <h2>개인신청 취소</h2>
+            </section>
+            
+            <section class="article-contents">
+                <form class="form" role="form" id="form" action="#" method="POST">
+                    <p>취소 사유를 적어주세요</p>
+                    <textarea name="cancel_reason" rows="8" cols="30"></textarea>
+                    <p></p><input type="submit" class="btn btn-default" value="신청 취소"/></p>
+                </form>
+            
+            </section>
+        </div> <!-- .col-*-* -->
+    </article>
+</div> <!-- .row -->
+{% endblock %}

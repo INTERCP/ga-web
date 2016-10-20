@@ -1,0 +1,151 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+{{ super() }}
+<article>
+    <h2>신청자 정보 : {{ member.name }}</h2>
+    {% if role == 'hq' %}
+    
+    <section class="span6" style="margin-left:0">
+    	<form action="pay" method="POST">
+            <table class="table">
+                <tr>
+                    <td>등록비</td>
+                    <td><input type="number" name="amount" id="amount" size="12" value="{{ payment.amount }}" required/></td>
+                </tr>
+                <tr>
+                	<td>코드</td>
+                	<td><input type="text" name="code" id="code" size="12" value="{{ payment.code }}"/></td>
+                </tr>
+                <tr>
+                    <td>납부여부</td>
+                    <td>
+                        <input type="radio" name="complete" id="complete2" {% if payment.complete == 2 %} checked {% endif %} required value="2"/> 완납
+                        <input type="radio" name="complete" id="complete1" {% if payment.complete == 1 %} checked {% endif %} value="1"/> 부분납
+                        <input type="radio" name="complete" id="complete0" {% if payment.complete == 0 %} checked {% endif %} value="0"/> 미납
+                    </td>
+                </tr>
+                <tr>
+                    <td>입금 확인자</td>
+                    <td><input type="text" name="staff_name" id="staff_name" size="12" value="{{ payment.staff_name }}" required/></td>
+                </tr>
+                <tr>
+                    <td>등록일(최초입금일)</td>
+                    <td>{{ payment.paydate }}</td>
+                </tr>
+                <tr>
+                    <td>클레임/예외사항</td>
+                    <td><textarea name="claim" id="claim">{{ payment.claim }}</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><p style="text-align:center"><input type="submit" class="btn btn-success" value="입금정보 입력"/>  <a class="btn btn-warning" href="{{ url_for('admin.del_payment', idx=member.idx)}}">입금정보 삭제</a></p></td>
+                </tr>
+                
+            </table>
+        </form>
+        
+        <form action = "{{ url_for('room.assign_single') }}" method="GET">
+        	<input type="hidden" name="member_idx" value="{{ member.idx }}">
+        	<select name="idx">
+        		<option value="">숙소</option>
+        		{% for r in rooms %}
+        		<option value={{ r.idx }} {% if r.idx == member.room_idx %} selected {% endif %}>{{ r.building }} {{ r.number }}</option>
+        		{% endfor %}
+        	</select>
+        	<input type="submit" value="배치">
+        </form>
+    </section>
+    
+    {% endif %}
+    <section class="span6">
+        <table class="table">
+            <tr>
+                <td>이름</td>
+                <td>{{ member.name }}</td>
+            </tr>
+            <tr>
+                <td>영문이름</td>
+                <td>{{ membership.enname }}</td>
+            </tr>
+            <tr>
+                <td>지역</td>
+                <td>{{ membership.city }}</td>
+            </tr>
+            <tr>
+                <td>연락처</td>
+                <td>{{ member.contact }}</td>
+            </tr>
+            <tr>
+                <td>교단</td>
+                <td>{{ membership.denomination }}</td>
+            </tr>
+            <tr>
+                <td>출석교회</td>
+                <td>{{ member.church }}</td>
+            </tr>
+            <tr>
+                <td>교회 주소</td>
+                <td>{{ membership.churchaddr }}</td>
+            </tr>
+            <tr>
+                <td>참가 구분</td>
+                <td>{{ member.persontype }}</td>
+            </tr>
+            <tr>
+                <td>직분</td>
+                <td>{{ membership.job }}</td>
+            </tr>
+            <tr>
+                <td>성별</td>
+                <td>{% if member.sex == 'M' %} 남 {% else %} 여 {% endif %}</td>
+            </tr>
+            <tr>
+                <td>전체참석 여부</td>
+                <td>{% if member.fullcamp_yn %} 전체참석 {% else %} 부분참석 {% endif %}</td>
+            </tr>
+            <tr>
+                <td>오는날</td>
+                <td>{{ member.date_of_arrival }}</td>
+            </tr>
+            <tr>
+                <td>가는날</td>
+                <td>{{ member.date_of_leave }}</td>
+            </tr>
+            <tr>
+                <td>비전캠프 참가 여부</td>
+                <td>{% if member.mit_yn %} 예 {% else %} 아니오 {% endif %}</td>
+            </tr>
+            <tr>
+                <td>통역 필요</td>
+                <td>{{ member.language }}</td>
+            </tr>
+            <tr>
+                <td>등록 날자</td>
+                <td>{{ member.regdate }}</td>
+            </tr>
+            <tr>
+                <td>컨퍼런스 참여 경로</td>
+                <td>
+                    {% for t in membership['training'] %}
+                    {{ t }}&nbsp;
+                    {% endfor %}
+                </td>
+            </tr>
+            
+            <tr>
+                <td>메모</td>
+                <td>{{ member.memo }}</td>
+            </tr>
+            
+            <tr>
+                <td colspan="2">
+                    <p style="text-align:center">
+                        <a class="btn btn-default" href="edit">수정</a>&nbsp;&nbsp;
+                        <a class="btn btn-default" href="{{ url_for('admin.cancel_person', idx=member.idx) }}">신청취소</a>
+                    </p>
+                </td>
+            </tr>
+            
+        </table>
+    </section>
+</article>
+{% endblock body %}

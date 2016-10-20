@@ -1,0 +1,197 @@
+{% extends "ga/base.html" %}
+
+{% block content %}
+<div class="row">
+    <article class="main-content">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-12">
+            <br/>
+            <h2>참가비 안내</h2>
+            <p>* 전체 일정 참가: 65,000원 * 1박2일 참가: 45,000원 * 하루 참가자: 30,000원<br/>
+                (숙식포함, 비전캠프 참가비 별도)
+            </p>
+            <p>
+                계좌번호: 국민은행 832701-01-362846 (예금주:전문인국제***(GA))<br/>
+                입금자 명에 참가자의 지역과 이름 기입해 주세요. 예)서울 김선교
+            </p>
+            <p>
+                * 문 의: 국제컨퍼런스팀 070-8787-6544~8 / GA@btjkorea.org
+            </p>
+            <p>
+                * 환 불: 2주전(5/6)은 전액, 2주~전날(5/19) 50%, 당일취소 불가
+            </p>
+            <br/>
+            <br/>
+        </div>
+        
+        <div class="col-sm-8 col-sm-offset-2 col-xs-12">
+			<section class="article-header">
+				<h2>참가 신청서 작성</h2>
+			</section>
+			
+			<section class="article-contents">
+				<form class="form" role="form" id="form" action="#" method="POST">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <td><label for="name">성명</label></td>
+                                <td colspan="3"><input type="text" name="name" id="name" size="12"/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="name">영문 이름</label></td>
+                                <td colspan="3"><input type="text" name="enname" id="enname" size="12"/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="sex">성별</label></td>
+                                <td colspan="3">
+                                    <input type="radio" name="sex" id="sex_m" value="M" />&nbsp;&nbsp;<label for="sex_m">남자</label>&nbsp;
+                                    <input type="radio" name="sex" id="sex_f" value="F" />&nbsp;&nbsp;<label for="sex_f">여자</label>&nbsp;
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td><label for="hp">연락처</label></td>
+                                <td colspan="3"><select name="hp" id="hp">
+                                    <option value="010">010</option>
+                                    <option value="011">011</option>
+                                    <option value="016">016</option>
+                                    <option value="017">017</option>
+                                    <option value="018">018</option>
+                                    <option value="019">019</option>
+                                </select>
+                                -<input name="hp2" id="hp2" type="text" size="4"/>
+                                -<input name="hp3" id="hp3" type="text" size="4"/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="persontype">지역(지부)</label></td>
+                                <td colspan="3">
+                                    <input type="radio" name="persontype" id="domestic" value="국내" checked/>&nbsp;&nbsp;<label for="domestic">국내</label>&nbsp;&nbsp;
+                                    <input type="radio" name="persontype" id="oversea" value="해외"/>&nbsp;&nbsp;<label for="oversea">해외</label>&nbsp;&nbsp;
+                                    <input type="text" name="city" id="city" placeholder="(도시 이름을 적어주세요)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="church">소속교회</label></td>
+                                <td colspan="3"><input type="text" name="church" id="church" size="12"/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="church">교회 주소</label></td>
+                                <td colspan="3"><input type="text" name="churchaddr" id="churchaddr" size="20"/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="job">직분</label></td>
+                                <td colspan="3">
+                                    <select name="job" id="job">
+                                        <option value="">선택하세요</option>
+                                        <option value="목회자">목회자</option>
+                                        <option value="비목회자">비목회자</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            
+                            
+                            <tr>
+                                <td><label for="denomination">교단</label></td>
+                                <td>
+                                    <input type="text" name="denomination" id="denomination"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="fullcamp_yn">참가형태</label></td>
+                                <td colspan="3">
+                                    <input type="radio" name="fullcamp_yn" id="fullcamp_y" value="1" checked />&nbsp;&nbsp;<label for="fullcamp_y">전체참가</label>&nbsp;
+                                    <input type="radio" name="fullcamp_yn" id="fullcamp_n" value="0" />&nbsp;&nbsp;<label for="fullcamp_n">부분참가</label>&nbsp;
+                                </td>
+                            </tr>
+                            <tr id="bubun">
+                                <td>오는날</td>
+                                <td><select name="date_of_arrival">
+                                    <option selected value="2015-05-20">2015-05-20</option>
+                                    <option value="2015-05-21">2015-05-21</option>
+                                    <option value="2015-05-22">2015-05-22</option>
+                                </select></td>
+                                <td>가는날</td>
+                                <td><select name="date_of_leave">
+                                    <option value="2015-05-20">2015-05-20</option>
+                                    <option value="2015-05-21">2015-05-21</option>
+                                    <option selected value="2015-05-22">2015-05-22</option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td><label for="mit_yn">비전캠프 참가 여부</label></td>
+                                <td>
+                                    <input type="radio" name="mit_yn" id="mit_y" value="1"/>&nbsp;&nbsp;<label for="mit_y">예</label>&nbsp;
+                                    <input type="radio" name="mit_yn" id="mit_n" value="0"/>&nbsp;&nbsp;<label for="mit_n">아니오</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>컨퍼런스 참여 경로</td>
+                                <td colspan="3">
+                                    <table>
+                                        <tr>
+                                            <td><input type="checkbox" name="training" id="kpma" class="membership" value="목선협"/> &nbsp;<label for="kpma">목선협(KPMA)</label>&nbsp;&nbsp;</td>
+                                            
+                                            <td><input type="checkbox" name="training" id="pvs" class="membership" value="목회자 비전스쿨"/> &nbsp;<label for="pvs">목회자 비전스쿨</label>&nbsp;&nbsp;</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="training" id="sender" class="membership" value="인터콥 소속 선교사 파송교회"/> &nbsp;<label for="sender">인터콥 소속 선교사 파송교회</label>&nbsp;&nbsp;</td>
+                                            <td><input type="checkbox" name="training" id="partner" class="membership" value="인터콥 협력교회"/> &nbsp;<label for="partner">인터콥 협력교회</label>&nbsp;&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td><input type="checkbox" name="training" id="none" class="none" value="기타"/> &nbsp;<label for="none">기타</label>&nbsp;&nbsp;
+                                            <span style="font-size:10px">(** 남기고싶은 말에 남겨주세요)</span></td>
+                                            <!--                        
+                                            <td><input type="checkbox" name="none" id="none" value="없음"/> &nbsp;<label for="none">없음</label>&nbsp;&nbsp;</td>-->
+                                        </tr>
+                                    </table>	
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="children">동반자녀</label></td>
+                                <td><input type="text" name="children" id="children" placeholder="이름, 나이, 성별, 인원수 등"/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="language">통역 필요</label></td>
+                                <td colspan="3"><select name="language" id="language">
+                                    <option value="필요 없음">필요 없음</option>
+                                    <option value="영어">영어</option>
+                                    <option value="중국어">중국어</option>
+                                    <option value="일본어">일본어</option>
+                                    <option value="기타">기타</option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td><label for="memo">남기고싶은 말</label></td>
+                                <td colspan="3"><textarea cols="20" rows="6" name="memo" id="memo"></textarea></td>
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="4">** 신청 정보 조회 변경 및 취소를 위해서 비밀번호를 입력해 주세요(4자리 이상)</td>
+                            </tr>
+                            <tr>
+                                <td><label for="pwd">비밀번호</label></td>
+                                <td colspan="3"><input type="password" name="pwd" id="pwd" size="12"/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="pwd2">비밀번호 확인</label></td>
+                                <td colspan="3"><input type="password" name="pwd2" id="pwd2" size="12"/><div id="pwd_alert"></div></td>
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="4">
+                                    <p style="text-align:center"><input type="button" onclick="submit_form()" class="btn btn-default" value="신청 완료" /></p>
+                                </td>
+                            </tr>
+                        </table><!--/table-->
+                    </div>
+					<input type="hidden" name="contact" id="contact"/>
+					<input type="hidden" name="birth" id="birth"/>
+					<input type="hidden" name="campidx" id="campidx" value="{{ campidx }}"/>
+				</form>
+			</section>
+        </div>
+    </article>
+    <script src="{{ url_for('static', filename='ga/js/reg-individual.js') }}"></script>
+</div> <!-- .row -->
+{% endblock %}

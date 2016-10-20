@@ -1,0 +1,39 @@
+{% extends "ga/base.html" %}
+
+{% block content %}
+<div class="row">
+	<style>
+    .table-shuttle {
+        border-collapse: collapse;
+        margin-left: 22px;
+    }
+
+    .table-shuttle td, .table-shuttle th{
+        border: 1px solid #CCC;
+        text-align: center;
+        font-size: 14px;
+        padding: 3px 5px;
+        color: #656565;
+    }
+
+    .table-shuttle th {
+        font-weight: bold;
+        background-color: #eaeaea;
+    }
+
+    .rowhead {
+        background: #dfdfdf;
+
+    }
+    
+    h2 {
+    	font-size: 22px;
+    }
+    </style>
+    <article class="main-content">
+        <div class="col-sm-8 col-sm-offset-2 col-xs-12">
+        	<img src="{{ url_for('static', filename='ga/img/program.jpg') }}" style="width:100%" />
+        </div>
+    </article>
+</div>
+{% endblock %}

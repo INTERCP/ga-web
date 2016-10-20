@@ -1,0 +1,54 @@
+/* 
+ * Nanum Barun Gothic, Nanum Gothic (Korean) http://hangeul.naver.com
+ * Open Font License http://scripts.sil.org/OFL
+ */
+@font-face {
+  font-family: 'Nanum Barun Gothic';
+  font-style: normal;
+  font-weight: 400;
+  src: local(※), local('Nanum Barun Gothic Regular'), local('Nanum Barun Gothic-Regular'), local('NanumBarunGothic Regular');
+  src: url(./NanumBarunGothic.eot);
+  src: url(./NanumBarunGothic.eot?#iefix) format('embedded-opentype'),
+       url(./NanumBarunGothic.woff) format('woff'),
+       url(./NanumBarunGothic.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Nanum Barun Gothic';
+  font-style: normal;
+  font-weight: 700;
+  src: local(※), local('Nanum Barun Gothic Bold'), local('Nanum Barun Gothic-Bold'), local('NanumBarunGothic Bold');
+  src: url(./NanumBarunGothicBold.eot);
+  src: url(./NanumBarunGothicBold.eot?#iefix) format('embedded-opentype'),
+       url(./NanumBarunGothicBold.woff) format('woff'),
+       url(./NanumBarunGothicBold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Nanum Gothic';
+  font-style: normal;
+  font-weight: 400;
+  src: local(※), local('Nanum Gothic Reqular'), local('Nanum Gothic-Regular'), local('NanumGothic Regular');
+  src: url(./NanumGothic.eot);
+  src: url(./NanumGothic.eot?#iefix) format('embedded-opentype'),
+       url(./NanumGothic.woff) format('woff'),
+       url(./NanumGothic.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'SangSangBody';
+  font-style: normal;
+  font-weight: 400;
+  src: local(※), local('SangSang Body Regular'), local('SangSang Body-Regular'), local('SangSangBody Regular');
+  src: url(./SangSangBodyL.eot);
+  src: url(./SangSangBodyL.eot?#iefix) format('embedded-opentype'),
+       url(./SangSangBodyL.woff) format('woff'),
+       url(./SangSangBodyL.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'SangSangBody';
+  font-style: normal;
+  font-weight: 500;
+  src: local(※), local('SangSang Body Medium'), local('SangSang Body-Medium'), local('SangSangBody Medium');
+  src: url(./SangSangBodyM.eot);
+  src: url(./SangSangBodyM.eot?#iefix) format('embedded-opentype'),
+       url(./SangSangBodyM.woff) format('woff'),
+       url(./SangSangBodyM.ttf) format('truetype');
+}

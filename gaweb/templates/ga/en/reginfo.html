@@ -1,0 +1,96 @@
+{% extends "ga/en/base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+        <section class="article-header">
+            <h2>신청서 조회</h2>
+        </section>
+        <section class="article-content table-responsive">
+            <table class="table">
+                <tr>
+                    <td>Name</td>
+                    <td>{{ member.name }}</td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td>{{ member.sex }}</td>
+                    
+                </tr>
+                <tr>
+                    <td>Contact information</td>
+                    <td>{{ member.contact }}</td>
+                </tr>
+                
+                <tr>
+                    <td>Participant’s Region</td>
+                    <td>{{ member.city }}</td>
+                </tr>
+                <tr>
+                    <td>Home Church</td>
+                    <td>{{ member.church }}</td>
+                </tr>
+                
+                <tr>
+                    <td>Church Address</td>
+                    <td>{{ member.churchaddr }}</td>
+                </tr>
+                
+                <tr>
+                    <td>Position</td>
+                    <td>{{ member.job }}</td>
+                </tr>
+                
+                <tr>
+                    <td>Denomination</td>
+                    <td>{{ member.denomination }}</td>
+                </tr>
+                
+                <tr>
+                    <td>Attendance Type</td>
+                    <td>{{ member.fullcamp_yn }}</td>
+                </tr>
+                <tr>
+                    <td>Date of Arrival</td>
+                    <td>{{ member.date_of_arrival }}</td>
+                </tr>
+                <tr>
+                    <td>Date of Leave</td>
+                    <td>{{ member.date_of_leave }}</td>
+                </tr>
+                
+                <tr>
+                    <td>Will attend 3rd Vision Camp</td>
+                    <td>{{ member.mit_yn }}</td>
+                </tr>
+                <tr>
+                    <td>Accompanying Children</td>
+                    <td>{{ member.children }}</td>
+                </tr>
+                <tr>
+                    <td>Translation Needs</td>
+                    <td>{{ member.language }}</td>
+                </tr>
+                <tr>
+                    <td>Registration Date</td>
+                    <td>{{ member.regdate }}</td>
+                </tr>
+                <tr>
+                    <td>MEMO</td>
+                    <td>{{ member.memo }}</td>
+                </tr>
+                
+                <tr>
+                    <td colspan="2">
+                        <p style="text-align:center">
+                            <a class="btn btn-default" href="edit">수정</a>&nbsp;&nbsp;
+                            <a class="btn btn-default" href="cancel">신청취소</a>
+                        </p>
+                    </td>
+                </tr>
+                
+            </table>
+        </section>
+    </div>
+</div>
+{% endblock %}

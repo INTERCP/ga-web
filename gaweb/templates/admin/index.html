@@ -1,0 +1,128 @@
+{% extends 'admin/master.html' %}
+
+{% block head %}
+<style>
+	.table1 td {
+		border: 1px solid #ccc;
+		padding: 8px;
+		font-size: 13px;
+	}
+	
+	.table2 {
+		display: inline-block;
+	}
+	
+	@media all and (max-width: 980px) {
+		.table1 td {
+			border: 1px solid #ccc;
+			padding: 4px;
+			font-size: 11px;
+		}
+	}
+</style>
+{% endblock head %}
+{% block body %}
+{{ super() }}
+<div class="row-fluid">
+	
+    <div>
+    	<!-- 로그인 하였을 경우 -->
+        {% if current_user.is_authenticated %}
+        <article>
+		    <section class="span8">
+		        <p>전체 현황<span style="color:#777">(신청/<span style="color:red">등록</span>)</span></p>
+		        <table class="table1">
+		            <tr>
+		                <td>전체</td>
+		                <td>{{ stat.total }} / <span style="color:red">{{ stat.registered }}</span></td>
+		                <td>남자(국내)</td>
+		                <td>{{ stat.t_man }} / {{ stat.cnt_man_p }} / {{ stat.cnt_man_np }} / <span style="color:red">{{ stat.r_man }}</span></td>
+		                <td>여자(국내)</td>
+		                <td>{{ stat.t_woman }} / {{ stat.cnt_woman_p}} / {{ stat.cnt_woman_np }} / <span style="color:red">{{ stat.r_woman }}</span></td>
+		            </tr>
+		            <tr>
+		                <td><a href="{{ url_for('list.list_filter', category='job', val='목회자') }}">목회자</a></td>
+		                <td>{{ stat.t_pastor }} / <span style="color:red">{{ stat.r_pastor }}</span></td>
+		                <td><a href="{{ url_for('list.list_filter', category='job', val='비목회자') }}">비목회자</a></td>
+		                <td>{{ stat.t_nonpastor }} / <span style="color:red">{{ stat.r_nonpastor }}</span></td>
+		            </tr>
+		        </table>
+		        <br/>
+		        <p>참가구분<span style="color:#777">(전체/목회자/비목회자/<span style="color:red">등록</span>)</span></p>
+		        <table class="table1">
+		            {% set i = 0 %}
+		            <tr>
+		                {% for c in stat.persontype %}
+		                
+		                <td><a href="{{ url_for('list.list_filter', category='persontype', val=c.name) }}">{{ c.name }}</a></td>
+		                
+		                <td>{{ c.count }} / <a href="{{ url_for('list.pastors_filter', category='persontype', val=c.name, pastor='pastor') }}">{{ c.cnt_pastor }}</a> 
+		                / <a href="{{ url_for('list.pastors_filter', category='persontype', val=c.name, pastor='nonpastor') }}">{{ c.cnt_nonpastor }}</a> 
+		                / <span style="color:red">{{ c.r_count }}</span> / <span style="color:green">{{ c.a_count }}</span></td>
+		                {% set i=i+1 %}
+		                {% if i%4 == 0 %} </tr><tr> {% endif %}
+		                {% endfor %}
+		            </tr>
+		        </table>
+		        <br/>
+		       
+		    	
+		        <br/>
+		    	<p>국내 지역별 통계<span style="color:#777">(전체/목회자/비목회자/<span style="color:red">등록</span>)</span></p>
+		        <table class="table1">
+		            {% set i = 0 %}
+		            <tr>
+		                {% for c in stat.city %}
+		                {% if c.persontype == '국내' %}
+		                {% if c.name == None %}
+		                <td><a href="{{ url_for('list.list_filter', category='city', val='None') }}">없음</a></td>
+		                <td>{{ c.count }} / <a href="{{ url_for('list.pastors_filter', category='city', val='None', pastor='pastor') }}">{{ c.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', category='city', val='None', pastor='nonpastor') }}">{{ c.cnt_nonpastor }}</a> / <span style="color:red">{{ c.r_count }}</span> / <span style="color:green">{{ c.a_count }}</span></td>
+		                {% elif not c.name == None %}
+		                <td><a href="{{ url_for('list.list_filter', category='city', val=c.name) }}">{{ c.name }}</a></td>
+		                <td>{{ c.count }} / <a href="{{ url_for('list.pastors_filter', category='city', val=c.name, pastor='pastor') }}">{{ c.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', category='city', val=c.name, pastor='nonpastor') }}">{{ c.cnt_nonpastor }}</a> / <span style="color:red">{{ c.r_count }}</span> / <span style="color:green">{{ c.a_count }}</span></td>
+		                
+		                {% endif %}
+		                
+		                {% set i=i+1 %}
+		                {% if i%3 == 0 %} </tr><tr> {% endif %}
+		                {% endif %}
+		                {% endfor %}
+		            </tr>
+		        </table>
+		        <br/>
+		        
+		    </section>
+		</article>
+        
+        
+        
+        
+        
+        
+        <!-- 로그인하지 않았을 경우 -->
+        {% else %}
+        <form method="POST" action="">
+            {{ form.hidden_tag() if form.hidden_tag }}
+            {% for f in form if f.type != 'CSRFTokenField' %}
+            <div>
+            {{ f.label }}
+            {{ f }}
+            {% if f.errors %}
+            <ul>
+                {% for e in f.errors %}
+                <li>{{ e }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            </div>
+            {% endfor %}
+            <button class="btn" type="submit">로그인</button>
+        </form>
+        {{ link | safe }}
+        {% endif %}
+    </div>
+	<!--  
+    <a class="btn btn-primary" href="/"><i class="icon-arrow-left icon-white"></i> Back</a>
+    -->
+</div>
+{% endblock body %}

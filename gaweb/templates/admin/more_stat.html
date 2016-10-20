@@ -1,0 +1,328 @@
+{% extends 'admin/master.html' %}
+
+{% block head %}
+<style>
+	.table1 td {
+		border: 1px solid #ccc;
+		padding: 8px;
+		font-size: 13px;
+	}
+	
+	.table2 {
+		display: inline-block;
+		text-align:center;
+	}
+	
+	.subtotal td {
+		background-color: #eaeaea;
+	}
+	
+	.total td {
+		background-color: #ccc;
+	}
+	
+	@media all and (max-width: 980px) {
+		.table1 td {
+			border: 1px solid #ccc;
+			padding: 4px;
+			font-size: 11px;
+		}
+	}
+</style>
+{% endblock head %}
+{% block body %}
+{{ super() }}
+<div class="row-fluid">
+	
+    <div>
+    	<!-- 로그인 하였을 경우 -->
+        {% if current_user.is_authenticated() %}
+        <article>
+		    <section class="span8">
+		        <p>전체 현황<span style="color:#777">(신청/<span style="color:red">등록</span>)</span></p>
+		        <table class="table1">
+		            <tr>
+		                <td>전체</td>
+		                <td>{{ stat.total }} / <span style="color:red">{{ stat.registered }}</span></td>
+		                <td>남자(국내)</td>
+		                <td>{{ stat.t_man }} / {{ stat.cnt_man_p }} / {{ stat.cnt_man_np }} / <span style="color:red">{{ stat.r_man }}</span></td>
+		                <td>여자(국내)</td>
+		                <td>{{ stat.t_woman }} / {{ stat.cnt_woman_p}} / {{ stat.cnt_woman_np }} / <span style="color:red">{{ stat.r_woman }}</span></td>
+		            </tr>
+		            <tr>
+		                <td><a href="{{ url_for('list.list_filter', category='job', val='목회자') }}">목회자</a></td>
+		                <td>{{ stat.t_pastor }} / <span style="color:red">{{ stat.r_pastor }}</span></td>
+		                <td><a href="{{ url_for('list.list_filter', category='job', val='비목회자') }}">비목회자</a></td>
+		                <td>{{ stat.t_nonpastor }} / <span style="color:red">{{ stat.r_nonpastor }}</span></td>
+		                <td>출석인원</td>
+		                <td>전체 <span style="color:green">{{ stat.cnt_attend }}</span> / 남자 <span style="color:green">{{ stat.cnt_man_attend }}</span> / 여자 <span style="color:green">{{ stat.cnt_woman_attend }}</span></td>
+		            </tr>
+		            
+		        </table>
+		        <br/>
+		        <p>참가구분<span style="color:#777">(전체/목회자/비목회자/<span style="color:red">등록</span>)</span></p>
+		        <table class="table1">
+		            {% set i = 0 %}
+		            <tr>
+		                {% for c in stat.persontype %}
+		                
+		                <td><a href="{{ url_for('list.list_filter', category='persontype', val=c.name) }}">{{ c.name }}</a></td>
+		                
+		                <td>{{ c.count }} / <a href="{{ url_for('list.pastors_filter', category='persontype', val=c.name, pastor='pastor') }}">{{ c.cnt_pastor }}</a> 
+		                / <a href="{{ url_for('list.pastors_filter', category='persontype', val=c.name, pastor='nonpastor') }}">{{ c.cnt_nonpastor }}</a> 
+		                / <span style="color:red">{{ c.r_count }}</span> / <span style="color:green">{{ c.a_count }}</span></td>
+		                {% set i=i+1 %}
+		                {% if i%4 == 0 %} </tr><tr> {% endif %}
+		                {% endfor %}
+		            </tr>
+		        </table>
+		        <br/>
+		        
+		        <table class="table1 table2">
+		    		<tr>
+		    			<td colspan="5">전체</td>
+		    		</tr>
+		    		<tr>
+		    			<td colspan="2">구분</td>
+		    			<td>신청</td>
+		    			<td>등록</td>
+		    			<td>출석</td>
+		    		</tr>
+		            <tr>
+		                <td rowspan="3">해외</td>
+		                <td>목회자</td>
+		                <td>{{ stat_total['intl']['pastor']['cnt'] }}</td>
+		                <td>{{ stat_total['intl']['pastor']['r_cnt'] }}</td>
+		                <td>{{ stat_total['intl']['pastor']['a_cnt'] }}</td>
+		            </tr>
+		            <tr>
+		            	<td>비목회자</td>
+		                <td>{{ stat_total['intl']['nonpastor']['cnt'] }}</td>
+		                <td>{{ stat_total['intl']['nonpastor']['r_cnt'] }}</td>
+		                <td>{{ stat_total['intl']['nonpastor']['a_cnt'] }}</td>
+		            </tr>
+		            <tr class="subtotal">
+		            	<td>소계</td>
+		            	<td>{{ stat_total['intl']['pastor']['cnt'] + stat_total['intl']['nonpastor']['cnt'] }}</td>
+		                <td>{{ stat_total['intl']['pastor']['r_cnt'] + stat_total['intl']['nonpastor']['r_cnt'] }}</td>
+		                <td>{{ stat_total['intl']['pastor']['a_cnt'] + stat_total['intl']['nonpastor']['a_cnt'] }}</td>
+		            </tr>
+		            
+		            <tr>
+		                <td rowspan="3">국내</td>
+		                <td>목회자</td>
+		                <td>{{ stat_total['dom']['pastor']['cnt'] }}</td>
+		                <td>{{ stat_total['dom']['pastor']['r_cnt'] }}</td>
+		                <td>{{ stat_total['dom']['pastor']['a_cnt'] }}</td>
+		            </tr>
+		            <tr>
+		            	<td>비목회자</td>
+		                <td>{{ stat_total['dom']['nonpastor']['cnt'] }}</td>
+		                <td>{{ stat_total['dom']['nonpastor']['r_cnt'] }}</td>
+		                <td>{{ stat_total['dom']['nonpastor']['a_cnt'] }}</td>
+		            </tr>
+		            <tr class="subtotal">
+		            	<td>소계</td>
+		            	<td>{{ stat_total['dom']['pastor']['cnt'] + stat_total['dom']['nonpastor']['cnt'] }}</td>
+		                <td>{{ stat_total['dom']['pastor']['r_cnt'] + stat_total['dom']['nonpastor']['r_cnt'] }}</td>
+		                <td>{{ stat_total['dom']['pastor']['a_cnt'] + stat_total['dom']['nonpastor']['a_cnt'] }}</td>
+		            </tr>
+		            <tr class="total">
+		            	<td colspan="2">합계</td>
+		            	<td>{{ stat_total['intl']['pastor']['cnt'] + stat_total['intl']['nonpastor']['cnt'] + stat_total['dom']['pastor']['cnt'] + stat_total['dom']['nonpastor']['cnt'] }}</td>
+		            	<td>{{ stat_total['intl']['pastor']['r_cnt'] + stat_total['intl']['nonpastor']['r_cnt'] + stat_total['dom']['pastor']['r_cnt'] + stat_total['dom']['nonpastor']['r_cnt'] }}</td>
+		            	<td>{{ stat_total['intl']['pastor']['a_cnt'] + stat_total['intl']['nonpastor']['a_cnt'] + stat_total['dom']['pastor']['a_cnt'] + stat_total['dom']['nonpastor']['a_cnt'] }}</td>
+		            </tr>
+		            
+		        </table>
+		        
+		        <!-- 날자별 통계: 정렬기준 - 구분, 직분 / 날자 -->
+		        <table class="table1 table2">
+		        	<tr>
+		        		{% for date in dates %}
+		        		<td colspan="3">{{ date }}</td>
+		        		{% endfor %}
+		        	</tr>
+		        	<tr>
+		        		{% for date in dates %}
+		        		<td>신청</td>
+		    			<td>등록</td>
+		    			<td>출석</td>
+		        		{% endfor %}
+		    		</tr>
+		    		{% for persontype in persontypes %}
+		    		{% for job in jobs %}
+		            <tr>
+		            	{% for date in dates %}
+		        		<td>{{ stat_summary[date.strftime('%Y-%m-%d')][persontype][job]['cnt'] }}</td>
+		                <td>{{ stat_summary[date.strftime('%Y-%m-%d')][persontype][job]['r_cnt'] }}</td>
+		                <td>{{ stat_summary[date.strftime('%Y-%m-%d')][persontype][job]['a_cnt'] }}</td>
+		        		{% endfor %}
+		            </tr>
+		            {% endfor %}
+
+		            <tr class="subtotal">
+		            		            
+		            	{% for date in dates %}
+		            		
+		            	<td>{{ stat_summary[date.strftime('%Y-%m-%d')][persontype]['pastor']['cnt'] + stat_summary[date.strftime('%Y-%m-%d')][persontype]['nonpastor']['cnt'] }}</td>
+		            	<td>{{ stat_summary[date.strftime('%Y-%m-%d')][persontype]['pastor']['r_cnt'] + stat_summary[date.strftime('%Y-%m-%d')][persontype]['nonpastor']['r_cnt'] }}</td>
+		            	<td>{{ stat_summary[date.strftime('%Y-%m-%d')][persontype]['pastor']['a_cnt'] + stat_summary[date.strftime('%Y-%m-%d')][persontype]['nonpastor']['a_cnt'] }}</td>
+		            	{% endfor %}
+		            </tr>
+		            {% endfor %}
+		            
+		            <tr class="total">
+		            	{% for date in dates %}
+		            	<td>{{ stat_summary[date.strftime('%Y-%m-%d')]['intl']['pastor']['cnt'] + stat_summary[date.strftime('%Y-%m-%d')]['intl']['nonpastor']['cnt'] + stat_summary[date.strftime('%Y-%m-%d')]['dom']['pastor']['cnt'] + stat_summary[date.strftime('%Y-%m-%d')]['dom']['nonpastor']['cnt'] }}</td>
+		            	<td>{{ stat_summary[date.strftime('%Y-%m-%d')]['intl']['pastor']['r_cnt'] + stat_summary[date.strftime('%Y-%m-%d')]['intl']['nonpastor']['r_cnt'] + stat_summary[date.strftime('%Y-%m-%d')]['dom']['pastor']['r_cnt'] + stat_summary[date.strftime('%Y-%m-%d')]['dom']['nonpastor']['r_cnt'] }}</td>
+		            	<td>{{ stat_summary[date.strftime('%Y-%m-%d')]['intl']['pastor']['a_cnt'] + stat_summary[date.strftime('%Y-%m-%d')]['intl']['nonpastor']['a_cnt'] + stat_summary[date.strftime('%Y-%m-%d')]['dom']['pastor']['a_cnt'] + stat_summary[date.strftime('%Y-%m-%d')]['dom']['nonpastor']['a_cnt'] }}</td>
+		            	{% endfor %}
+		            </tr>
+		        </table>
+		        
+		        
+		        <p style="clear:both"></p>
+		        <br/>
+		        <p>3차 비전캠프 참석 여부<span style="color:#777">(전체/목회자/비목회자/<span style="color:red">등록</span>)</span></p>
+		        <table class="table1">
+		            {% set i = 0 %}
+		            <tr>
+		                {% for c in stat.mit_yn %}
+		                
+		                <td><a href="{{ url_for('list.list_filter', category='mit_yn', val=c.name) }}">{{ c.name }}</a></td>
+		                
+		                <td>{{ c.count }} / <a href="{{ url_for('list.pastors_filter', category='mit_yn', val=c.name, pastor='pastor') }}">{{ c.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', category='mit_yn', val=c.name, pastor='nonpastor') }}">{{ c.cnt_nonpastor }}</a> / <span style="color:red">{{ c.r_count }}</span> / <span style="color:green">{{ c.a_count }}</span></td>
+		                {% set i=i+1 %}
+		                {% if i%4 == 0 %} </tr><tr> {% endif %}
+		                {% endfor %}
+		            </tr>
+		        </table>
+		        <br/>
+		        
+		    	<p>컨퍼런스 참여경로</p>
+		        <table class="table1">
+		            {% set i = 0 %}
+		            <tr>
+		                {% for t in stat.training %}
+		                
+		                {% if t.name == None %}
+		                <td>없음</td>
+		                <td>{{ t.count }} / {{ t.cnt_pastor }} / {{ t.cnt_nonpastor }} / <span style="color:red">{{ t.r_count }}</span> / <span style="color:green">{{ t.a_count }}</span></td>
+		                
+		                {% elif t.name == '기타' %}
+		                <td><a href="{{ url_for('list.list_filter', category='etc', val=t.name) }}">{{ t.name }}</a></td>
+		                <td>{{ t.count }} / <a href="{{ url_for('list.pastors_filter', pastor='pastor', category='etc', val=t.name) }}">{{ t.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', pastor='nonpastor', category='etc', val=t.name) }}">{{ t.cnt_nonpastor }}</a> / <span style="color:red">{{ t.r_count }}</span> / <span style="color:green">{{ t.a_count }}</span></td>
+		                
+		                {% elif t.name == '목선협' %}
+		                <td><a href="{{ url_for('list.list_filter', category='kpma', val=t.name) }}">{{ t.name }}</a></td>
+		                <td>{{ t.count }} / <a href="{{ url_for('list.pastors_filter', pastor='pastor', category='kpma', val=t.name) }}">{{ t.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', pastor='nonpastor', category='kpma', val=t.name) }}">{{ t.cnt_nonpastor }}</a> / <span style="color:red">{{ t.r_count }}</span> / <span style="color:green">{{ t.a_count }}</span></td>
+		                
+		                {% elif t.name == '목회자 비전스쿨' %}
+		                <td><a href="{{ url_for('list.list_filter', category='pvs', val=t.name) }}">{{ t.name }}</a></td>
+		                <td>{{ t.count }} / <a href="{{ url_for('list.pastors_filter', pastor='pastor', category='pvs', val=t.name) }}">{{ t.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', pastor='nonpastor', category='pvs', val=t.name) }}">{{ t.cnt_nonpastor }}</a> / <span style="color:red">{{ t.r_count }}</span> / <span style="color:green">{{ t.a_count }}</span></td>
+		                
+		                {% elif t.name == '인터콥 소속 선교사 파송교회' %}
+		                <td><a href="{{ url_for('list.list_filter', category='sender', val=t.name) }}">{{ t.name }}</a></td>
+		                <td>{{ t.count }} / <a href="{{ url_for('list.pastors_filter', pastor='pastor', category='sender', val=t.name) }}">{{ t.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', pastor='nonpastor', category='sender', val=t.name) }}">{{ t.cnt_nonpastor }}</a> / <span style="color:red">{{ t.r_count }}</span> / <span style="color:green">{{ t.a_count }}</span></td>
+		                
+		                {% elif t.name == '인터콥 협력교회' %}
+		                <td><a href="{{ url_for('list.list_filter', category='partner', val=t.name) }}">{{ t.name }}</a></td>
+		                <td>{{ t.count }} / <a href="{{ url_for('list.pastors_filter', pastor='pastor', category='partner', val=t.name) }}">{{ t.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', pastor='nonpastor', category='partner', val=t.name) }}">{{ t.cnt_nonpastor }}</a> / <span style="color:red">{{ t.r_count }}</span> / <span style="color:green">{{ t.a_count }}</span></td>
+		                
+		                {% elif t.name == '지인 권유' %}
+		                
+		                {% else %}
+		                <td>{{ t.name }}</td>
+		                <td>{{ t.count }} / {{ t.cnt_pastor }} / {{ t.cnt_nonpastor }} / <span style="color:red">{{ t.r_count }}</span> / <span style="color:green">{{ t.a_count }}</span></td>
+		                
+		                {% endif %}
+		                
+		                {% set i=i+1 %}
+		                {% if i%3 == 0 %} </tr><tr> {% endif %}
+		                {% endfor %}
+		            </tr>
+		        </table>
+		        <br/>
+		        <br/>
+		    	<p>국내 지역별 통계<span style="color:#777">(전체/목회자/비목회자/<span style="color:red">등록</span>)</span></p>
+		        <table class="table1">
+		            {% set i = 0 %}
+		            <tr>
+		                {% for c in stat.city %}
+		                {% if c.persontype == '국내' %}
+		                {% if c.name == None %}
+		                <td><a href="{{ url_for('list.list_filter', category='city', val='None') }}">없음</a></td>
+		                <td>{{ c.count }} / <a href="{{ url_for('list.pastors_filter', category='city', val='None', pastor='pastor') }}">{{ c.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', category='city', val='None', pastor='nonpastor') }}">{{ c.cnt_nonpastor }}</a> / <span style="color:red">{{ c.r_count }}</span> / <span style="color:green">{{ c.a_count }}</span></td>
+		                {% elif not c.name == None %}
+		                <td><a href="{{ url_for('list.list_filter', category='city', val=c.name) }}">{{ c.name }}</a></td>
+		                <td>{{ c.count }} / <a href="{{ url_for('list.pastors_filter', category='city', val=c.name, pastor='pastor') }}">{{ c.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', category='city', val=c.name, pastor='nonpastor') }}">{{ c.cnt_nonpastor }}</a> / <span style="color:red">{{ c.r_count }}</span> / <span style="color:green">{{ c.a_count }}</span></td>
+		                
+		                {% endif %}
+		                
+		                {% set i=i+1 %}
+		                {% if i%3 == 0 %} </tr><tr> {% endif %}
+		                {% endif %}
+		                {% endfor %}
+		            </tr>
+		        </table>
+		        <br/>
+		        
+		        <p>해외 지역별 통계<span style="color:#777">(전체/목회자/비목회자/<span style="color:red">등록</span>)</span></p>
+		        <table class="table1">
+		            {% set i = 0 %}
+		            <tr>
+		                {% for c in stat.city %}
+		                {% if c.persontype == '해외' and c.name=='인터콥선교사'  %}
+		                {% if c.name == None %}
+		                <td><a href="{{ url_for('list.list_filter', category='city', val='None') }}">없음</a></td>
+		                <td>{{ c.count }} / <a href="{{ url_for('list.pastors_filter', category='city', val='None', pastor='pastor') }}">{{ c.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', category='city', val='None', pastor='nonpastor') }}">{{ c.cnt_nonpastor }}</a> / <span style="color:red">{{ c.r_count }}</span> / <span style="color:green">{{ c.a_count }}</span></td>
+		                {% elif not c.name == None %}
+		                <td><a href="{{ url_for('list.list_filter', category='city', val=c.name) }}">{{ c.name }}</a></td>
+		                <td>{{ c.count }} / <a href="{{ url_for('list.pastors_filter', category='city', val=c.name, pastor='pastor') }}">{{ c.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', category='city', val=c.name, pastor='nonpastor') }}">{{ c.cnt_nonpastor }}</a> / <span style="color:red">{{ c.r_count }}</span> / <span style="color:green">{{ c.a_count }}</span></td>
+		                
+		                {% endif %}
+		                
+		                {% set i=i+1 %}
+		                {% if i%3 == 0 %} </tr><tr> {% endif %}
+		                {% endif %}
+		                {% endfor %}
+		            </tr>
+		        </table>
+		        
+		        <br/>
+		    </section>
+		</article>
+        
+        
+        
+        
+        
+        
+        <!-- 로그인하지 않았을 경우 -->
+        {% else %}
+        <form method="POST" action="">
+            {{ form.hidden_tag() if form.hidden_tag }}
+            {% for f in form if f.type != 'CSRFTokenField' %}
+            <div>
+            {{ f.label }}
+            {{ f }}
+            {% if f.errors %}
+            <ul>
+                {% for e in f.errors %}
+                <li>{{ e }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            </div>
+            {% endfor %}
+            <button class="btn" type="submit">로그인</button>
+        </form>
+        {{ link | safe }}
+        {% endif %}
+    </div>
+	<!--  
+    <a class="btn btn-primary" href="/"><i class="icon-arrow-left icon-white"></i> Back</a>
+    -->
+</div>
+{% endblock body %}

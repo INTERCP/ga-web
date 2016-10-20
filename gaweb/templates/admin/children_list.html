@@ -1,0 +1,66 @@
+{% extends 'admin/master.html' %}
+
+{% block head %}
+<style>
+	.table1 td, .table1 th {
+		border: 1px solid #ccc;
+		padding: 6px;
+		font-size: 10px;
+	}
+	
+	@media all and (max-width: 980px) {
+		.table1 td {
+			border: 1px solid #ccc;
+			padding: 4px;
+			font-size: 9px;
+		}
+	}
+</style>
+{% endblock head %}
+
+{% block body %}
+{{ super() }}
+<article class="row-fluid">
+    <h2>전체 신청자 리스트</h2>
+    <section class="table-responsive">
+        <table class="table1" style="font-size:12px;">
+            <thead>
+                <tr>
+                    <th>신청날자</th>
+                    <th>성명</th>
+                    <th>성별</th>
+                    <th>연락처</th>
+                    <th>입금액</th>
+                    <th>코드</th>
+                    <th>지역</th>
+                    <th style="width:48px">직분</th>
+                    <th>비캠참석</th>
+                    <th>전체참석</th>
+                    <th>동반자녀</th>
+                    <th style="width:300px" class="hidden-sm hidden-xs">메모</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in members %}
+                {% if m.children != '없음' and m.children != '0' and m.children != 'x' and m.children != '무' and m.children != 'X' and m.children != 'No' %}
+                <tr>
+                    <td>{{ m.regdate }}</td>
+                    <td><a href="{{ url_for('list.person', idx=m.idx) }}">{{ m.name }}</a></td>
+                    <td>{{ m.sex }}</td>
+                    <td>{{ m.contact }}</td>
+                    <td>{% if m.amount == None %} 0 {% else %} {{ m.amount }} {% endif %}</td>
+                    <td>{{ m.code }} </td>
+                    <td>{{ m.city }}</td>
+                    <td>{{ m.job }}</td>
+                    <td>{{ m.mit_yn }}</td>
+                    <td>{{ m.fullcamp_yn }}</td>
+                    <td>{{ m.children }} </td>
+                    <td class="hidden-sm hidden-xs">{{ m.memo|striptags|truncate(50) }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</article>
+{% endblock body %}

@@ -1,0 +1,124 @@
+{% extends 'admin/master.html' %}
+
+{% block head %}
+<style>
+	.table1 {
+		display:inline-block;
+	}
+	.table1 td {
+		border: 1px solid #ccc;
+		padding: 8px;
+		font-size: 13px;
+	}
+	
+	@media all and (max-width: 980px) {
+		.table1 td {
+			border: 1px solid #ccc;
+			padding: 4px;
+			font-size: 11px;
+		}
+	}
+</style>
+{% endblock head %}
+{% block body %}
+{{ super() }}
+<div class="row-fluid">
+	
+    <div>
+        <article>
+		    <section class="span12" style="margin-left:0">
+		    	
+		    	<br/>
+		    	<p>컨퍼런스 참여경로</p>
+		        <table class="table1">
+		            {% set i = 0 %}
+		            <tr>
+		                {% for t in stat.training %}
+		                
+		                {% if t.name == None %}
+		                <td>없음</td>
+		                {% elif not t.name == None %}
+		                <td>{{ t.name }}</td>
+		                {% endif %}
+		                <td>{{ t.count }} / {{ t.cnt_pastor }} / {{ t.cnt_nonpastor }} / <span style="color:red">{{ t.r_count }}</span></span></td>
+		                {% set i=i+1 %}
+		                {% if i%3 == 0 %} </tr><tr> {% endif %}
+		                {% endfor %}
+		            </tr>
+		        </table>
+		        <br/>
+		        <br/>
+		    	<p>지역별 통계<span style="color:#777">(전체/목회자/비목회자/<span style="color:red">등록</span>)</span></p>
+		        <table class="table1">
+		            {% set i = 0 %}
+		            <tr>
+		                {% for c in stat.city %}
+		                {% if c.name == None %}
+		                <td><a href="{{ url_for('list.list_filter', category='city', val='None') }}">없음</a></td>
+		                <td>{{ c.count }} / <a href="{{ url_for('list.pastors_filter', category='city', val='None', pastor='pastor') }}">{{ c.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', category='city', val='None', pastor='nonpastor') }}">{{ c.cnt_nonpastor }}</a> / <span style="color:red">{{ c.r_count }}</span></td>
+		                {% elif not c.name == None %}
+		                <td><a href="{{ url_for('list.list_filter', category='city', val=c.name) }}">{{ c.name }}</a></td>
+		                <td>{{ c.count }} / <a href="{{ url_for('list.pastors_filter', category='city', val=c.name, pastor='pastor') }}">{{ c.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', category='city', val=c.name, pastor='nonpastor') }}">{{ c.cnt_nonpastor }}</a> / <span style="color:red">{{ c.r_count }}</span></td>
+		                
+		                {% endif %}
+		                
+		                {% set i=i+1 %}
+		                {% if i%3 == 0 %} </tr><tr> {% endif %}
+		                {% endfor %}
+		            </tr>
+		        </table>
+		        <br/>
+		        
+		        <br/>
+		        <p>등록날자별<span style="color:#777">(전체/목회자/비목회자/<span style="color:red">등록</span>)</span></p>
+		        <table class="table1">
+		            {% set i = 0 %}
+		            <tr>
+		                {% for c in stat.regdate %}
+		                
+		                <td><a href="{{ url_for('list.list_filter', category='regdate', val=c.name) }}">{{ c.name }}</a></td>
+		                
+		                <td>{{ c.count }} / <a href="{{ url_for('list.pastors_filter', category='regdate', val=c.name, pastor='pastor') }}">{{ c.cnt_pastor }}</a> / <a href="{{ url_for('list.pastors_filter', category='regdate', val=c.name, pastor='nonpastor') }}">{{ c.cnt_nonpastor }}</a> / <span style="color:red">{{ c.r_count }}</span></td>
+		                {% set i=i+1 %}
+		                {% if i%3 == 0 %} </tr><tr> {% endif %}
+		                {% endfor %}
+		            </tr>
+		        </table>
+		        <br/>
+		        <br/>
+		        
+				<!--  
+		        <p>교단별 통계<span style="color:#777">(전체/목회자/비목회자/<span style="color:red">등록</span>)</span></p>
+		        <table class="table1">
+		            {% set i = 0 %}
+		            <tr>
+		                {% for den in stat.denomination %}
+		                
+		                {% if den.name == None %}
+		                <td><a href="{{ url_for('list.list_filter', category='denomination', val='None') }}">없음</a></td>
+		                {% elif not den.name == None %}
+		                <td><a href="{{ url_for('list.list_filter', category='denomination', val=den.name) }}">{{ den.name }}</a></td>
+		                
+		                {% else %}
+		                
+		                
+		                <td>{{ bool(den.name) }}</td>
+		                
+		                {% endif %}
+		                <td>{{ den.count }} / {{ den.cnt_pastor }} / {{ den.cnt_nonpastor }} / <span style="color:red">{{ den.r_count }}</span></td>
+		                {% set i=i+1 %}
+		                {% if i%3 == 0 %} </tr><tr> {% endif %}
+		                {% endfor %}
+		            </tr>
+		        </table>
+		        -->
+		        <br/>
+		    </section>
+		</article>
+        <br/>
+    </div>
+	<!--  
+    <a class="btn btn-primary" href="/"><i class="icon-arrow-left icon-white"></i> Back</a>
+    -->
+</div>
+{% endblock body %}

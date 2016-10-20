@@ -1,0 +1,124 @@
+{% extends 'admin/master.html' %}
+
+{% block head %}
+<style>
+	.table1 td, .table1 th {
+		border: 1px solid #ccc;
+		padding: 6px;
+		font-size: 10px;
+	}
+	
+	.table2 td {
+		border: 1px solid #ccc;
+		padding: 12px;
+		font-size: 14px;
+		text-align: center;
+	}
+	
+	@media all and (max-width: 980px) {
+		.table1 td {
+			border: 1px solid #ccc;
+			padding: 4px;
+			font-size: 9px;
+			
+		}
+	}
+	
+	.row-fluid{
+	     white-space: nowrap;
+	     padding: 5px;
+	}
+</style>
+
+{% endblock head %}
+
+{% block body %}
+{{ super() }}
+<article class="row-fluid">
+	
+	
+	<div style="clear:both"></div>
+	<br/>
+	<h2>숙소 현황</h2>
+	<p>숙소를 클릭하면 해당 숙소에 배치된 인원 목록이 나타납니다.</p>
+	{% set i = 0 %}
+	<table class="table2">
+		<tr>
+		{% for r in rooms %}
+			<td><button class="assign btn" action="{{ url_for('room/status.members', idx=r.idx) }}">{{ r.building }}<br/>{{ r.number }}</button><br/>{{ r.occupied }}({{ r.attended }}) / {{ r.cap }}</td>
+		{% set i=i+1 %}
+		{% if i%8 == 0 %} </tr><tr> {% endif %}
+		{% endfor %}
+	</table>
+	<br/>
+    <h2>완납 신청자 리스트</h2>
+    <section class="table-responsive">
+    <form id="list" name="list" action="delete" method="POST">
+        <table class="table1">
+            <thead>
+                <tr>
+                    <th>신청날자</th>
+                    <th>선택</th>
+                    <th>출석</th>
+                    <th>성명</th>
+                    <th>성별</th>
+                    
+                    <th>입금액</th>
+                    <th>코드</th>
+                    <th>지역</th>
+                    <th style="width:48px">직분</th>
+                    
+                    <th>교단</th>
+                    
+                    <th>오는날</th>
+                    <th>가는날</th>
+                    
+                    <th>메모</th>
+                    <th>동반자녀</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in members %}
+                <tr>
+                    <td>{{ m.regdate }}</td>
+                    <td><input type="checkbox" name="{{ m.idx }}" id="{{ m.idx }}"/></td>
+                    <td>{{ m.attend_yn }}</td>
+                    <td><a href="{{ url_for('list.person', idx=m.idx) }}">{{ m.name }}</a></td>
+                    <td>{{ m.sex }}</td>
+                    
+                    <td>{% if m.amount == None %} 0 {% else %} {{ m.amount }} {% endif %}</td>
+                    <td>{{ m.code }} </td>
+                    <td>{{ m.city }}</td>
+                    <td>{{ m.job }}</td>
+                    
+                    <td>{{ m.denomination }}</td>
+                    
+                    <td>{{ m.date_of_arrival }}</td>
+                    <td>{{ m.date_of_leave }}</td>
+                    
+                    <td class="hidden-sm hidden-xs">{{ m.memo }}</td>
+                    <td>{{ m.children }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br/>
+        <input type="submit" class="btn" value="배치 취소"/>
+    </form>
+    </section>
+</article>
+{% endblock body %}
+{% block tail %}
+{{ super() }}
+<script>
+$(document).ready(function() {
+	$('.assign').click(function() {
+
+		document.list.action = $(this).attr("action");
+		document.list.method = 'POST';		
+
+		document.list.submit();
+	});
+});
+</script>
+{% endblock tail %}
