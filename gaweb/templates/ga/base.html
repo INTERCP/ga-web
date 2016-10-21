@@ -56,13 +56,15 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         			<ul class="nav navbar-nav">
         				<li><a href="/ga/index">초대의 글</a></li>
-                <li><a href="/ga/messenger">강사소개</a></li>
+        				<!--
+                <li><a href="/ga/messenger">강사소개</a></li>-->
                 <li><a href="/ga/intro">GA소개</a></li>
                 <!--
                 <li><a href="/ga/program">프로그램</a></li>
                 <li><a href="/ga/registration">참가신청</a></li>
                 <li><a href="/ga/check">조회하기</a></li>-->
-                <li><a href="http://www.btjcenter.com/info/facilities10.jsp">오시는 길</a></li>
+                <!--
+                <li><a href="http://www.btjcenter.com/info/facilities10.jsp">오시는 길</a></li>-->
                 <!--<li><a href="/ga/shuttle">셔틀안내</a></li>
                 <li><a href="/ga/en/index">ENGLISH</a></li>-->
         			</ul>
@@ -91,7 +93,7 @@
   {% endblock %}
 
 	<footer>
-        &copy; INTERCP 2015
+        &copy; INTERCP 2016
         <span style="float:right; margin-right:8px;">
             공유하기
             <a id="kakao-link-btn" href="#"><img src="{{ url_for('static', filename='ga/img/kakao.png') }}" style="width: 18px; margin-top:1px" /></a>&nbsp;
@@ -118,7 +120,7 @@
     // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
     Kakao.Link.createTalkLinkButton({
       container: '#kakao-link-btn',
-      label: "[제 3회 Global Alliance 국제컨퍼런스]\n\n올해 5월 모든 복음주의 세계교회의 영적동맹과 전략적 파트너십의 연대를 통한 주님의 지상 대명령의 완성을 위해, 10/40창 선교현지 교회지도자, 미주 및 국내 목회자 1천 명이 참가하는 역대 최대 한국형 '목회자국제컨퍼런스'가 개최될 예정입니다.\n\n이 컨퍼런스를 통해 한국교회와 세계교회가 이 시대를 이기고 천국복음을 땅끝까지 전하며 주님의 다시 오실 길을 예비하는 교회로 일어날 것입니다.\n\n이 귀한 자리에 귀하를 초대합니다.\n\nhttp://www.btjkorea.org/",
+      label: "[제 4회 Global Alliance 국제컨퍼런스]\n\n 오는 5월 모든 복음주의 세계교회의 영적동맹과 전략적 파트너십의 연대를 통한 주님의 지상 대명령의 완성을 위해, 10/40창 선교현지 교회지도자, 미주 및 국내 목회자 1천 명이 참가하는 역대 최대 한국형 '목회자국제컨퍼런스'가 개최될 예정입니다.\n\n이 컨퍼런스를 통해 한국교회와 세계교회가 이 시대를 이기고 천국복음을 땅끝까지 전하며 주님의 다시 오실 길을 예비하는 교회로 일어날 것입니다.\n\n이 귀한 자리에 귀하를 초대합니다.\n\nhttp://www.btjkorea.org/",
 
       image: {
         src: "http://www.intercp.net/ga/ga_promo1.jpg",
