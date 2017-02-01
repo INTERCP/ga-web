@@ -1,21 +1,26 @@
-#-*-coding:utf-8-*-
-import sys, os, jinja2
+# -*-coding:utf-8-*-
+import sys
+import os
+import jinja2
+from flask import Flask
+
+
 reload(sys)
 sys.setdefaultencoding('utf-8')  # @UndefinedVariable
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 
-from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+
+# from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.jinja_loader = jinja2.FileSystemLoader(tmpl_dir)
 app.secret_key = 'r&rbtrtk3hd36u#9k=8cb*!m@8o1t)zp=mws#s&a!jvvty9yis'
 
-import config
+# import config
 # Database initialization
-app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DATABASE_URI
-db = SQLAlchemy(app)
+# app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DATABASE_URI
+# db = SQLAlchemy(app)
 
 # admin 로그인 정보
 app.config['ADMIN_ID'] = 'gaadmin'
