@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from flask import render_template, abort, redirect, url_for, session, flash
 from jinja2 import TemplateNotFound
 
@@ -7,7 +7,7 @@ from gaweb import app
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('show', page='index', lang=None))
 
 
 @app.route('/ga/', defaults={'page': 'index', 'lang': None})

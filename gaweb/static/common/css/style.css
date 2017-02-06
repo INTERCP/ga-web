@@ -1,7 +1,7 @@
 /* http://avexdesigns.com/responsive-youtube-embed/ */
 .video-container {
     position: relative;
-    padding-bottom: 69.75%;
+    padding-bottom: 56.25%;
     padding-top: 30px; 
     height: 0; 
     overflow: hidden;
@@ -63,7 +63,8 @@
 
 body
 {
-	background: url("../img/bg.jpg");
+	/*background: url("../img/bg.jpg");*/
+	background-color: #eeeeee;
 }
 
 /* 메인 폰트 설정 */
@@ -134,7 +135,7 @@ table td {
 
 .wrapper
 {
-	max-width: 1000px;
+	max-width: 700px;
 	margin: 0 auto;
 	background-color: #fff;
 	box-shadow: 0 0 4px rgba(0,0,0,0.2);
@@ -152,7 +153,7 @@ table td {
 
 .row
 {
-	padding: 20px 40px;
+	/* padding: 20px 40px; */
 	margin: 0;
 }
 
