@@ -1,97 +1,32 @@
-header
-{
-    position: fixed;
-    z-index: 100;
-    max-width: 1000px;
+header {
+    max-width: 700px;
 }
 
-.header-padding
-{
-    padding-top: 300px;
+.header-padding {
+    padding-top: 100px;
 }
 
 
 @media all and (max-width: 768px) {
-    .header-padding
-    {
+    .header-padding {
         padding-top: 200px;
     }
 }
 
 
 @media all and (max-width: 480px) {
-    .header-padding
-    {
+    .header-padding {
         padding-top: 150px;
     }
 }
 
-footer
-{
+footer {
     width: 100%;
-    max-width: 1000px;
+    max-width: 700px;
 	background-color: #39393b;
     padding: 5px 5px 5px 15px;
-
-    position:fixed;
-    bottom: 0;
-
-    padding-right: 15px;
-
     color: #aeaeae
 }
-
-.navbar-default {
-  background: #fff;
-  border-radius: none;
-  box-shadow: none;
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
-  border: 0 none;
-  font-size: 18px;
-}
-
-/*
-.primary-navigation
-{
-	border-top: 0px solid #2E4A9A;
-	padding: 15px 50px;
-    background: #fff;
-}
-
-@media all and (max-width:768px) {
-    .primary-navigation
-    {
-        padding: 15px 0;
-    }
-
-    .primary-navigation li {
-        padding: 0;
-        line-height: 10px;
-    }
-
-
-
-    .primary-navigation li a
-    {
-        font-size: 10px;
-        padding: 4px 7px;
-        letter-spacing: -1px;
-        font-weight: bold;
-    }
-
-    .row {
-        padding: 15px;
-    }
-}
-*/
-.primary-navigation ul
-{
-	margin-bottom: 0;
-	padding: 0;
-}
-
-
 
 .divider
 {
